@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "458959227295",
+    "project_id": "mirror-otp-34f6b",
+    "storage_bucket": "mirror-otp-34f6b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:458959227295:android:c2ac5a0e551bc269cd15aa",
+        "android_client_info": {
+          "package_name": "com.thepanshu.mirrorotp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "458959227295-krq450541sj77dero796dm6q3gg3rr92.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.thepanshu.mirrorotp",
+            "certificate_hash": "0421bac343fa037d3a342d615cb9e37fb7be7bf1"
+          }
+        },
+        {
+          "client_id": "458959227295-23ph4893vf9ku2kgge26p2thqf5m9ie0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSD8I-ps07FF8MFdf6WYb91gXS5lwpPqk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "458959227295-23ph4893vf9ku2kgge26p2thqf5m9ie0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
