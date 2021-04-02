@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:backgroundTint="@color/blue_bg"
     android:layout_height="match_parent"
-    tools:context=".ui.main.SignInFragment">
+    tools:context=".ui.authenticate.SignInFragment">
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/materialTextView"

@@ -1,4 +1,4 @@
-package com.thepanshu.mirrorotp.ui.main
+package com.thepanshu.mirrorotp.ui.authenticate
 
 import androidx.lifecycle.ViewModel
 

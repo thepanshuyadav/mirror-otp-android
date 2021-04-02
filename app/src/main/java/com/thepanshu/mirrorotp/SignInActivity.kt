@@ -4,10 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.google.firebase.auth.FirebaseAuth
-import com.thepanshu.mirrorotp.ui.main.SignInFragment
-import com.thepanshu.mirrorotp.ui.main.SplashFragment
+import com.thepanshu.mirrorotp.ui.authenticate.SignInFragment
+import com.thepanshu.mirrorotp.ui.authenticate.SplashFragment
 import java.util.*
-import kotlin.concurrent.schedule
 
 class SignInActivity : AppCompatActivity() {
     private lateinit var firebaseAuth: FirebaseAuth

@@ -1,4 +1,4 @@
-package com.thepanshu.mirrorotp.ui.main
+package com.thepanshu.mirrorotp.ui.authenticate
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
