@@ -22,25 +22,25 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            app:cardCornerRadius="70dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginTop="24dp"
-            app:strokeWidth="8dp"
-            app:strokeColor="@color/yellow_500"
-            android:background="@android:color/transparent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:cardElevation="8dp"
-            app:layout_constraintTop_toTopOf="parent">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_round_person"
-                app:tint="@color/black" />
-        </com.google.android.material.card.MaterialCardView>
+<!--        <com.google.android.material.card.MaterialCardView-->
+<!--            android:layout_width="70dp"-->
+<!--            android:layout_height="70dp"-->
+<!--            app:cardCornerRadius="70dp"-->
+<!--            android:layout_marginEnd="24dp"-->
+<!--            android:layout_marginTop="24dp"-->
+<!--            app:strokeWidth="8dp"-->
+<!--            app:strokeColor="@color/yellow_500"-->
+<!--            android:background="@android:color/transparent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:cardElevation="8dp"-->
+<!--            app:layout_constraintTop_toTopOf="parent">-->
+<!--            <ImageView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:src="@drawable/ic_round_person"-->
+<!--                app:tint="@color/black" />-->
+<!--        </com.google.android.material.card.MaterialCardView>-->
 
         <ImageView
             android:id="@+id/imageView"
@@ -58,9 +58,9 @@
             android:layout_height="60dp"
             android:layout_marginHorizontal="32dp"
             android:backgroundTint="@color/yellow_500"
-            android:drawableEnd="@drawable/ic_round_arrow_forward"
+            android:drawableEnd="@drawable/ic_round_laptop"
             android:drawableTint="@color/black"
-            android:text="See how it works"
+            android:text="My Devices"
             android:textColor="@color/black"
             app:cornerRadius="32dp"
             app:elevation="8dp"
@@ -75,7 +75,7 @@
             android:layout_marginHorizontal="32dp"
             android:layout_marginTop="8dp"
             android:backgroundTint="@color/black"
-            android:drawableEnd="@drawable/ic_round_laptop"
+            android:drawableEnd="@drawable/ic_round_arrow_forward"
             android:drawableTint="@color/white"
             android:text="Add new device"
             app:cornerRadius="32dp"
@@ -95,11 +95,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/addDeviceButton" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="My Devices"
+            android:text="Messages"
             android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/poppins_bold"
@@ -110,6 +110,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_margin="8dp"
+            android:id="@+id/smsRv"
             android:layout_height="wrap_content"
             android:isScrollContainer="false"
             app:layout_constraintTop_toBottomOf="@id/textView"
