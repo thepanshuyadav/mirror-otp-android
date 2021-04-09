@@ -50,7 +50,6 @@ class MainActivity : AppCompatActivity() {
                 for(sms in Telephony.Sms.Intents.getMessagesFromIntent(p1)) {
                     // TODO: Post using work manager
                     //Toast.makeText(requireContext(), sms.displayOriginatingAddress + " " + sms.displayMessageBody, Toast.LENGTH_LONG).show()
-
                     smsList.add(sms.toString())
                     Log.d("SMS", smsList.toString())
                 }
