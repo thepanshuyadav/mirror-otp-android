@@ -9,12 +9,25 @@
         android:id="@+id/navigation_home"
         android:name="com.thepanshu.mirrorotp.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_addDeviceFragment"
+            app:destination="@id/addDeviceFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.thepanshu.mirrorotp.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard" />
+    <fragment
+        android:id="@+id/addDeviceFragment"
+        android:name="com.thepanshu.mirrorotp.ui.addDevice.AddDeviceFragment"
+        android:label="fragment_add_device"
+        tools:layout="@layout/fragment_add_device" >
+        <action
+            android:id="@+id/action_addDeviceFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
 
 </navigation>

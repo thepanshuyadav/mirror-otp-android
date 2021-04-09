@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.google.firebase.auth.FirebaseAuth
+import com.thepanshu.mirrorotp.ui.PermissionsFragment
 import com.thepanshu.mirrorotp.ui.authenticate.SignInFragment
 import com.thepanshu.mirrorotp.ui.authenticate.SplashFragment
 import java.util.*
@@ -28,9 +29,12 @@ class SignInActivity : AppCompatActivity() {
                 .commitNow()
         }
         else {
-            val i = Intent(this@SignInActivity, MainActivity::class.java)
-            startActivity(i)
-            finish()
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.container, PermissionsFragment.newInstance())
+                .commitNow()
+//            val i = Intent(this@SignInActivity, MainActivity::class.java)
+//            startActivity(i)
+//            finish()
         }
     }
 }

@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -22,12 +23,14 @@ import com.thepanshu.mirrorotp.MainActivity
 import com.thepanshu.mirrorotp.R
 import com.thepanshu.mirrorotp.models.SignInToken
 import com.thepanshu.mirrorotp.retrofit.SignInService
+import com.thepanshu.mirrorotp.ui.PermissionsFragment
 
 
 class SignInFragment : Fragment() {
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var auth: FirebaseAuth
     private lateinit var signInButton: MaterialButton
+    private lateinit var progressBar: ProgressBar
 
     companion object {
         fun newInstance() = SignInFragment()
@@ -43,8 +46,11 @@ class SignInFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View {
         val root = inflater.inflate(R.layout.signin_fragment, container, false)
+        progressBar = root.findViewById(R.id.progressBar)
+        progressBar.visibility = View.INVISIBLE
         signInButton = root.findViewById(R.id.sign_in_button)
         signInButton.setOnClickListener {
+            progressBar.visibility = View.VISIBLE
             signIn()
         }
         return root
@@ -127,9 +133,13 @@ class SignInFragment : Fragment() {
             Snackbar.make(requireView(), message, Snackbar.LENGTH_LONG).show()
 
         } else {
-            val i = Intent(requireContext(), MainActivity::class.java)
-            startActivity(i)
-            requireActivity().finish()
+            // PERMISSION FRAGMENT
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.container, PermissionsFragment.newInstance())
+                .commitNow()
+//            val i = Intent(requireContext(), MainActivity::class.java)
+//            startActivity(i)
+//            requireActivity().finish()
         }
     }
 

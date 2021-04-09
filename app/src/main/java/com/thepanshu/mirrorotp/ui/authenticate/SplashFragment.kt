@@ -10,7 +10,7 @@ import com.thepanshu.mirrorotp.R
 class SplashFragment : Fragment() {
 
     companion object {
-        fun newInstance() = SignInFragment()
+        fun newInstance() = SplashFragment()
     }
 
     override fun onCreateView(

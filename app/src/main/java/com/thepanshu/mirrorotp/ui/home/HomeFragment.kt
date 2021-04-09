@@ -9,8 +9,8 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.button.MaterialButton
-import com.thepanshu.mirrorotp.AddDeviceActivity
 import com.thepanshu.mirrorotp.R
 
 class HomeFragment : Fragment() {
@@ -27,8 +27,7 @@ class HomeFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         val addDeviceButton: MaterialButton = root.findViewById(R.id.addDeviceButton)
         addDeviceButton.setOnClickListener {
-            val i = Intent(requireContext(), AddDeviceActivity::class.java)
-            startActivity(i)
+            findNavController().navigate(R.id.action_navigation_home_to_addDeviceFragment)
         }
         val textView: TextView = root.findViewById(R.id.text_home)
         homeViewModel.text.observe(viewLifecycleOwner, Observer {
