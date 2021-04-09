@@ -33,8 +33,9 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
         navView.setupWithNavController(navController)
 
-        val sharedPref = getPreferences(Context.MODE_PRIVATE)
-        userToken = sharedPref.getString("BACKEND_SIGN_IN_TOKEN", null)
+        val sharedPref = getSharedPreferences("TOKEN_PREF", Context.MODE_PRIVATE)
+        userToken = sharedPref.getString("USER_BACKEND_AUTH_TOKEN", null)
+        Log.d("TOKEN", userToken.toString())
 
         if(ActivityCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECEIVE_SMS), 111)

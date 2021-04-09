@@ -103,9 +103,16 @@ class SignInFragment : Fragment() {
             if (it?.userTokenId != null) {
                 // it = newly added user parsed as response
                 // it?.id = newly added user ID
-                Log.d(TAG,"backEndToken: ${it.userTokenId}")
-                val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
-                sharedPref?.edit()?.putString("BACKEND_SIGN_IN_TOKEN" ,it.userTokenId)?.apply()
+
+                val sharedPref = activity?.getSharedPreferences("TOKEN_PREF", Context.MODE_PRIVATE)
+                if(sharedPref != null) {
+                    //sharedPref.edit().putString("BACKEND_SIGN_IN_TOKEN" ,it.userTokenId).commit()
+                    val editor = sharedPref.edit()
+                    Log.d(TAG,"backEndToken: ${it.userTokenId}")
+                    editor.putString("USER_BACKEND_AUTH_TOKEN", it.userTokenId)
+                    editor.apply()
+                }
+
                 firebaseAuthWithGoogle(token.userTokenId!!)
             } else {
                 Log.e(TAG,"Error registering new user")

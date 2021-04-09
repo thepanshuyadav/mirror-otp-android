@@ -32,9 +32,6 @@ class SignInActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.container, PermissionsFragment.newInstance())
                 .commitNow()
-//            val i = Intent(this@SignInActivity, MainActivity::class.java)
-//            startActivity(i)
-//            finish()
         }
     }
 }

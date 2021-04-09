@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.graphics.Color.green
 import android.util.Log
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,7 +12,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.content.res.AppCompatResources.getColorStateList
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.checkSelfPermission
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import com.thepanshu.mirrorotp.MainActivity
@@ -36,9 +40,8 @@ class PermissionsFragment : Fragment() {
         smsPermissionButton = root.findViewById(R.id.smsPermissionButton)
         // Check if already granted
         cameraPermissionButton.setOnClickListener {
-            if(ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(
-                        requireActivity(),
+            if(checkSelfPermission(requireContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(
                         arrayOf(Manifest.permission.CAMERA),
                         333
                 )
@@ -50,9 +53,8 @@ class PermissionsFragment : Fragment() {
             }
         }
         smsPermissionButton.setOnClickListener {
-            if(ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(
-                        requireActivity(),
+            if(checkSelfPermission(requireContext(), Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(
                         arrayOf(Manifest.permission.RECEIVE_SMS),
                         111
                 )
@@ -67,8 +69,8 @@ class PermissionsFragment : Fragment() {
     }
 
     private fun checkAllGranted() {
-        if(ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+        if(checkSelfPermission(requireContext(), Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED &&
+                checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
             val i = Intent(requireContext(), MainActivity::class.java)
             startActivity(i)
             requireActivity().finish()
@@ -86,14 +88,14 @@ class PermissionsFragment : Fragment() {
 
 // TODO: Not working, fix
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        //super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if(requestCode == 333 && grantResults[0]== PackageManager.PERMISSION_GRANTED) {
-            cameraPermissionButton.setBackgroundColor(Color.GREEN)
+            cameraPermissionButton.backgroundTintList = ContextCompat.getColorStateList(requireContext(), android.R.color.holo_green_light)
             cameraPermissionButton.text = "Granted"
             Log.d("PER", "Granted")
         }
         else if(requestCode == 111 && grantResults[0]== PackageManager.PERMISSION_GRANTED) {
-            smsPermissionButton.setBackgroundColor(Color.GREEN)
+            smsPermissionButton.backgroundTintList = ContextCompat.getColorStateList(requireContext(), android.R.color.holo_green_light)
             smsPermissionButton.text = "Granted"
             Log.d("PER", "Granted")
         }

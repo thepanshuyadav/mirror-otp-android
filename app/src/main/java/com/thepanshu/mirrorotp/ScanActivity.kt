@@ -1,6 +1,5 @@
 package com.thepanshu.mirrorotp
 
-import android.R.id.message
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
