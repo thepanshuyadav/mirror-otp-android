@@ -10,5 +10,5 @@ data class Sms(
     @ColumnInfo(name = "sender_name") val sender: String,
     @ColumnInfo(name = "message_body") val body: String,
     @ColumnInfo(name = "date") val date: Long,
-    @ColumnInfo(name = "otp") val otp: Int = 888888
+    @ColumnInfo(name = "otp") val otp: String = "888888"
 )

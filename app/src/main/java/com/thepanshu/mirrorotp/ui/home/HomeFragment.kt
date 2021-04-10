@@ -7,14 +7,10 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.provider.Telephony
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -25,10 +21,12 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import com.google.android.material.button.MaterialButton
 import com.thepanshu.mirrorotp.R
+import com.thepanshu.mirrorotp.SmsService
 import com.thepanshu.mirrorotp.adapters.SmsListAdapter
 import com.thepanshu.mirrorotp.database.SmsDatabase
 import com.thepanshu.mirrorotp.models.Sms
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -38,20 +36,21 @@ class HomeFragment : Fragment() {
     private var userToken: String? = null
     var list = arrayListOf<Sms>()
     private lateinit var recyclerView: RecyclerView
+    private var broadcastReceiver: BroadcastReceiver? = null
 
-    val db: SmsDatabase by lazy {
+    private val db: SmsDatabase by lazy {
         Room.databaseBuilder(
-            requireContext(),
-            SmsDatabase::class.java,
-            "sms.db"
+                requireContext(),
+                SmsDatabase::class.java,
+                "sms.db"
         )
             .build()
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         homeViewModel =
             ViewModelProvider(this).get(HomeViewModel::class.java)
@@ -72,8 +71,11 @@ class HomeFragment : Fragment() {
     }
 
     private fun updateRv() {
+        GlobalScope.launch(Dispatchers.IO) {
+            // DO something
+        }
         db.smsDao().getAll().observe(viewLifecycleOwner, {
-            if(it!=null) {
+            if (it != null) {
                 list = it as ArrayList<Sms>
                 recyclerView.adapter = SmsListAdapter(it)
             }
@@ -89,8 +91,22 @@ class HomeFragment : Fragment() {
             requestPermissions(arrayOf(Manifest.permission.RECEIVE_SMS), 111)
         }
         else {
+            registerReceiver()
             receiveMessage()
         }
+    }
+
+    private fun registerReceiver() {
+        broadcastReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context, intent: Intent) {
+                updateRv()
+
+                /*
+                 * Step 3: We can update the UI of the activity here
+                 * */
+            }
+        }
+        this.activity?.registerReceiver(broadcastReceiver!!, IntentFilter("com.thepanshu.RECEIVED_SMS"))
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -100,33 +116,18 @@ class HomeFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        //receiveMessage()
+    }
+
+
+
     private fun receiveMessage() {
         // TODO: Use background service
-        var broadcastReceiver = object: BroadcastReceiver() {
-            override fun onReceive(p0: Context?, p1: Intent?) {
-                // TODO: Extract OTP
-                for(sms in Telephony.Sms.Intents.getMessagesFromIntent(p1)) {
-                    val receivedSms = Sms(
-                        sender = sms.displayOriginatingAddress,
-                        body = sms.displayMessageBody,
-                        date = sms.timestampMillis
-                    )
-                    GlobalScope.launch(Dispatchers.IO) {
-                        db.smsDao().insertSms(receivedSms)
-                        launch(Dispatchers.Main) {
-                            updateRv()
-                            Toast.makeText(requireContext(), sms.displayOriginatingAddress + " " + sms.displayMessageBody, Toast.LENGTH_LONG).show()
-                        }
-                    }
+        val i = Intent(this.activity, SmsService::class.java)
+        this.activity?.startService(i)
 
-                    // TODO: Post using work manager to Socket
-                    // TODO: Animate recycler view UI
-
-                }
-            }
-
-        }
-
-        activity?.registerReceiver(broadcastReceiver, IntentFilter("android.provider.Telephony.SMS_RECEIVED"))
+        // TODO: Animate recycler view UI, Update UI from service
     }
 }
