@@ -1,17 +1,14 @@
 package com.thepanshu.mirrorotp.ui.home
 
-import android.Manifest
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -26,11 +23,12 @@ import com.thepanshu.mirrorotp.adapters.SmsListAdapter
 import com.thepanshu.mirrorotp.database.SmsDatabase
 import com.thepanshu.mirrorotp.models.Sms
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
+
+    // TODO: SMS Receiver not working initially
 
     private lateinit var homeViewModel: HomeViewModel
     private var userToken: String? = null
@@ -87,13 +85,8 @@ class HomeFragment : Fragment() {
         val sharedPref = activity?.getSharedPreferences("TOKEN_PREF", Context.MODE_PRIVATE)
         userToken = sharedPref?.getString("USER_BACKEND_AUTH_TOKEN", null)
 
-        if(checkSelfPermission(requireContext(), Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(arrayOf(Manifest.permission.RECEIVE_SMS), 111)
-        }
-        else {
-            registerReceiver()
-            receiveMessage()
-        }
+        registerReceiver()
+
     }
 
     private fun registerReceiver() {
@@ -107,27 +100,5 @@ class HomeFragment : Fragment() {
             }
         }
         this.activity?.registerReceiver(broadcastReceiver!!, IntentFilter("com.thepanshu.RECEIVED_SMS"))
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if(requestCode == 111 && grantResults[0]==PackageManager.PERMISSION_GRANTED) {
-            receiveMessage()
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        //receiveMessage()
-    }
-
-
-
-    private fun receiveMessage() {
-        // TODO: Use background service
-        val i = Intent(this.activity, SmsService::class.java)
-        this.activity?.startService(i)
-
-        // TODO: Animate recycler view UI, Update UI from service
     }
 }

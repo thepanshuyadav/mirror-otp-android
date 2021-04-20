@@ -22,6 +22,8 @@ import com.thepanshu.mirrorotp.R
 import com.thepanshu.mirrorotp.ScanActivity
 import io.socket.client.IO
 import io.socket.client.Socket
+import org.json.JSONArray
+import org.json.JSONObject
 
 
 class AddDeviceFragment : Fragment() {
@@ -157,11 +159,10 @@ class AddDeviceFragment : Fragment() {
                 Log.d("SOCKET", userToken.toString())
                 mSocket = IO.socket("https://mirror-otp.herokuapp.com")
                 mSocket!!.connect()
-                mSocket!!.emit("JOIN_SERVER", userToken.toString()).on("ON_SUCCESSFUL_SERVER_JOIN") {
-                    Log.d("SOCKET", it.toString())
-                }
+                val tokenJson = JSONArray(arrayOf(userToken.toString(), qrCode))
+                mSocket!!.emit("JOIN_SERVER", tokenJson)
                 if(userToken!=null) {
-                    mSocket!!.emit("JOIN_EXTENSION", arrayOf(userToken!!, qrCode))
+                    mSocket!!.emit("JOIN_EXTENSION", tokenJson)
                     Log.d("SOCKET", "success")
                 }
                 progressBar.visibility = View.INVISIBLE

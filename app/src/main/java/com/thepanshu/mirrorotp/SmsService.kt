@@ -13,18 +13,28 @@ import androidx.annotation.Nullable
 import androidx.room.Room
 import com.thepanshu.mirrorotp.database.SmsDatabase
 import com.thepanshu.mirrorotp.models.Sms
+import io.socket.client.IO
+import io.socket.client.Socket
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import org.json.JSONArray
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 
 class SmsService : Service() {
-    var smsReceiver: SmsReceiver = SmsReceiver()
+    private var smsReceiver: SmsReceiver = SmsReceiver()
+    private var mSocket: Socket? = null
+    private var userToken: String? = null
     @Nullable
     override fun onBind(intent: Intent?): IBinder? {
         return null
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        //registerReceiver(smsReceiver, IntentFilter("android.provider.Telephony.SMS_RECEIVED"))
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -76,11 +86,18 @@ class SmsService : Service() {
                     db.smsDao().insertSms(receivedSms)
                     Log.d("BG", receivedSms.toString())
                     val intent = Intent("com.thepanshu.RECEIVED_SMS")
-//                    val extras = Bundle()
-//                    extras.putString("sender", sms.displayOriginatingAddress)
-//                    extras.putString("body", sms.displayMessageBody)
-//                    extras.putString("otp", otp)
-//                    intent.putExtras(extras)
+                    mSocket = IO.socket("https://mirror-otp.herokuapp.com")
+                    mSocket!!.connect()
+                    val sharedPref = getSharedPreferences("TOKEN_PREF", Context.MODE_PRIVATE)
+                    if (sharedPref != null) {
+                        userToken = sharedPref.getString("USER_BACKEND_AUTH_TOKEN", null)
+                    }
+                    val jsonArray = JSONArray(arrayOf(userToken, otp))
+
+                    mSocket!!.emit("GET_OTP", jsonArray)
+                    mSocket!!.on("Error") {
+                        Log.d("BG", it.toString())
+                    }
                     launch(Dispatchers.Main) {
                         p0?.sendBroadcast(intent)
                     }
