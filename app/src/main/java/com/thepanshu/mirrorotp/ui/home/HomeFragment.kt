@@ -61,13 +61,17 @@ class HomeFragment : Fragment() {
         homeViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
+        val refreshButton = root.findViewById<MaterialButton>(R.id.refreshButton)
+        refreshButton.setOnClickListener {
+            updateRv()
+        }
         updateRv()
         return root
     }
 
     private fun updateRv() {
         GlobalScope.launch(Dispatchers.IO) {
-            // DO something
+            // DO something: Progress Bar
         }
         db.smsDao().getAll().observe(viewLifecycleOwner, {
             if (it != null) {
@@ -81,5 +85,10 @@ class HomeFragment : Fragment() {
         super.onCreate(savedInstanceState)
         val sharedPref = activity?.getSharedPreferences("TOKEN_PREF", Context.MODE_PRIVATE)
         userToken = sharedPref?.getString("USER_BACKEND_AUTH_TOKEN", null)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        db.close()
     }
 }

@@ -91,9 +91,9 @@ class SmsReceiver : BroadcastReceiver() {
                         if (sharedPref != null) {
                             userToken = sharedPref.getString("USER_BACKEND_AUTH_TOKEN", null)
                         }
-                        val smsJSONObject = JSONObject("""{"sender":"${receivedSms.sender}", "body":"${receivedSms.body}", "date":"${receivedSms.date}", "otp":"${receivedSms.otp}"}""")
+                        val smsJSONObject = JSONObject("""{"otp":"${receivedSms.otp}", "time":"${receivedSms.date}", "name":"${receivedSms.sender}"}""")
                         val serverJSONObject = JSONObject("""{"userAuthToken":"${userToken.toString()}"}""")
-                        val otpJSONObject = JSONObject("""{"userAuthToken":"${userToken.toString()}", "otpList":[${smsJSONObject.toString()}]}""")
+                        val otpJSONObject = JSONObject("""{"userAuthToken":"${userToken.toString()}", "otpList":[${smsJSONObject}]}""")
                         mSocket!!.emit("JOIN_SERVER", serverJSONObject)
                         Log.d("BG", otpJSONObject.toString())
                         // TODO:
