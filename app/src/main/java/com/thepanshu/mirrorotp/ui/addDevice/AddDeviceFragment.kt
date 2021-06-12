@@ -159,10 +159,12 @@ class AddDeviceFragment : Fragment() {
                 Log.d("SOCKET", userToken.toString())
                 mSocket = IO.socket("https://mirror-otp.herokuapp.com")
                 mSocket!!.connect()
-                val tokenJson = JSONArray(arrayOf(userToken.toString(), qrCode))
-                mSocket!!.emit("JOIN_SERVER", tokenJson)
+                val serverJSONObject = JSONObject("""{"userAuthToken":"${userToken.toString()}"}""")
+                val extensionJSONObject = JSONObject("""{"userAuthToken":"${userToken.toString()}", "clientId":"${qrCode}"}""")
+                Log.d( "SOCKET",serverJSONObject.toString())
+                mSocket!!.emit("JOIN_SERVER", serverJSONObject)
                 if(userToken!=null) {
-                    mSocket!!.emit("JOIN_EXTENSION", tokenJson)
+                    mSocket!!.emit("JOIN_EXTENSION", extensionJSONObject)
                     Log.d("SOCKET", "success")
                 }
                 progressBar.visibility = View.INVISIBLE

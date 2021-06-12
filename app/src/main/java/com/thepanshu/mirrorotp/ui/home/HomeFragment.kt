@@ -2,8 +2,6 @@ package com.thepanshu.mirrorotp.ui.home
 
 import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import com.google.android.material.button.MaterialButton
 import com.thepanshu.mirrorotp.R
-import com.thepanshu.mirrorotp.SmsService
 import com.thepanshu.mirrorotp.adapters.SmsListAdapter
 import com.thepanshu.mirrorotp.database.SmsDatabase
 import com.thepanshu.mirrorotp.models.Sms
@@ -84,21 +81,5 @@ class HomeFragment : Fragment() {
         super.onCreate(savedInstanceState)
         val sharedPref = activity?.getSharedPreferences("TOKEN_PREF", Context.MODE_PRIVATE)
         userToken = sharedPref?.getString("USER_BACKEND_AUTH_TOKEN", null)
-
-        registerReceiver()
-
-    }
-
-    private fun registerReceiver() {
-        broadcastReceiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context, intent: Intent) {
-                updateRv()
-
-                /*
-                 * Step 3: We can update the UI of the activity here
-                 * */
-            }
-        }
-        this.activity?.registerReceiver(broadcastReceiver!!, IntentFilter("com.thepanshu.RECEIVED_SMS"))
     }
 }
