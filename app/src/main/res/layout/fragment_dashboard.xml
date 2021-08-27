@@ -46,7 +46,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:strokeColor="@color/black"
+                    app:strokeColor="@color/blue_700"
                     app:strokeWidth="4dp">
 
                     <ImageView
@@ -129,32 +129,32 @@
                 android:id="@+id/refreshButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
                 android:background="@android:color/transparent"
                 android:drawableEnd="@drawable/ic_baseline_refresh_24"
                 android:drawableTint="@color/blue_700"
                 android:text="Refresh"
                 android:textColor="@color/blue_700"
+                app:layout_constraintBottom_toBottomOf="@+id/textView"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/textView" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/addDeviceButton"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginHorizontal="32dp"
-            android:layout_marginTop="8dp"
-            android:backgroundTint="@color/black"
-            android:drawableEnd="@drawable/ic_round_arrow_forward"
-            android:drawableTint="@color/white"
-            android:text="Add new device"
-            app:cornerRadius="32dp"
-            app:elevation="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/materialButton" />
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/addDeviceButton"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="60dp"-->
+<!--            android:layout_marginHorizontal="32dp"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            android:backgroundTint="@color/black"-->
+<!--            android:drawableEnd="@drawable/ic_round_arrow_forward"-->
+<!--            android:drawableTint="@color/white"-->
+<!--            android:text="Add new device"-->
+<!--            app:cornerRadius="32dp"-->
+<!--            app:elevation="8dp"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/materialButton" />-->
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/smsRv"

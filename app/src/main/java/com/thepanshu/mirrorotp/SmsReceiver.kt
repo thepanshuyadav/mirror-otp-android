@@ -47,28 +47,14 @@ class SmsReceiver : BroadcastReceiver() {
                     val sms: SmsMessage = SmsMessage.createFromPdu(pdus[0] as ByteArray)
                     Log.d("SMS", sms.toString())
                     var otp = "xxxxxx"
-                    val pattern1 = Pattern.compile("(|^)\\d{6}")
-                    val pattern2 = Pattern.compile("(|^)\\d{7}")
-                    val pattern3 = Pattern.compile("(|^)\\d{5}")
-                    val pattern4 = Pattern.compile("(|^)\\d{4}")
+                    val pattern = Pattern.compile("\\s[0-9]{4,8}\\s")
                     if (sms.displayMessageBody != null) {
-                        val m1: Matcher = pattern1.matcher(sms.displayMessageBody)
-                        val m2: Matcher = pattern2.matcher(sms.displayMessageBody)
-                        val m3: Matcher = pattern3.matcher(sms.displayMessageBody)
-                        val m4: Matcher = pattern4.matcher(sms.displayMessageBody)
+                        val matcher: Matcher = pattern.matcher(sms.displayMessageBody)
                         when {
-                            m1.find() -> {
-                                otp = m1.group(0)
+                            matcher.find() -> {
+                                otp = matcher.group(0)
                             }
-                            m2.find() -> {
-                                otp = m2.group(0)
-                            }
-                            m3.find() -> {
-                                otp = m3.group(0)
-                            }
-                            m4.find() -> {
-                                otp = m4.group(0)
-                            }
+
                         }
 
                     }

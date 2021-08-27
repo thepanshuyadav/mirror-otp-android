@@ -15,7 +15,6 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="48dp"
         android:fontFamily="@font/poppins_bold"
-
         android:text="Almost In"
         android:textColor="@color/blue_700"
         android:textSize="32sp"
@@ -28,9 +27,6 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif"
         android:maxLines="4"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="32dp"
-
         android:text="Sign in with your Google account to continue."
         android:textColor="@android:color/black"
         android:textSize="16sp"
